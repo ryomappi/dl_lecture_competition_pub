@@ -11,6 +11,7 @@ from tqdm import tqdm
 
 from src.datasets import ThingsMEGDataset
 from src.models import BasicConvClassifier
+from src.models import EEGNet
 from src.utils import set_seed
 
 
@@ -43,10 +44,11 @@ def run(args: DictConfig):
         train_set.num_classes, train_set.seq_len, train_set.num_channels
     ).to(args.device)
 
+
     # ------------------
     #     Optimizer
     # ------------------
-    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=1e-2)
 
     # ------------------
     #   Start training
